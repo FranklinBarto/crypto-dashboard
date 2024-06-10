@@ -1,13 +1,25 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
-import styles from "./page.module.css";
+import "./page.scss";
+import Sidebar from "./components/sidebar";
+import Topbar from "./components/topbar";
 
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
+    <main className={`main ${isOpen ? 'open' : 'closed'}`}>
+      <Topbar/>
+      <Sidebar toggleSidebar={toggleSidebar} isOpen={isOpen}/>
+      <div className='description'>
         <p>
           Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
+          <code className='code'>src/app/page.js</code>
         </p>
         <div>
           <a
@@ -19,7 +31,7 @@ export default function Home() {
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
-              className={styles.vercelLogo}
+              className='vercelLogo'
               width={100}
               height={24}
               priority
@@ -28,9 +40,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={styles.center}>
+      <div className='center'>
         <Image
-          className={styles.logo}
+          className='logo'
           src="/next.svg"
           alt="Next.js Logo"
           width={180}
@@ -39,10 +51,10 @@ export default function Home() {
         />
       </div>
 
-      <div className={styles.grid}>
+      <div className='grid'>
         <a
           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
+          className='card'
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -54,7 +66,7 @@ export default function Home() {
 
         <a
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
+          className='card'
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -66,7 +78,7 @@ export default function Home() {
 
         <a
           href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
+          className='card'
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -75,10 +87,10 @@ export default function Home() {
           </h2>
           <p>Explore starter templates for Next.js.</p>
         </a>
-
+        
         <a
           href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
+          className='card'
           target="_blank"
           rel="noopener noreferrer"
         >

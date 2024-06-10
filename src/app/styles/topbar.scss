@@ -1,0 +1,10 @@
+.topbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: var(--top-bar);
+    width: 100vw;
+    background-color: #df0000;
+    color: #fff;
+    z-index: 10000;
+}
