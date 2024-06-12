@@ -11,8 +11,9 @@ const Sidebar = ({isOpen,toggleSidebar}) => {
       </button>
       <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-content">
-          <h2>Sidebar Content</h2>
-          <p>This is the content of the sidebar.</p>
+          <button><img src="https://via.placeholder.com/150"/> {isOpen ? <span>Some Text...</span> : ''}</button>
+          <button><img src="https://via.placeholder.com/150"/> {isOpen ? <span>Some Text...</span> : ''}</button>
+          <button><img src="https://via.placeholder.com/150"/> {isOpen ? <span>Some Text...</span> : ''}</button>
         </div>
       </div>
     </>
