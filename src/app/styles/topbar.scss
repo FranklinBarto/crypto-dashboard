@@ -4,7 +4,81 @@
     left: 0;
     height: var(--top-bar);
     width: 100vw;
-    background-color: #df0000;
-    color: #fff;
+    background-color: #f8f8f8;
+    color: #181935;
     z-index: 10000;
+    display: flex;
+    flex-direction: row;
+
+    .user{
+        display: flex;
+        flex-direction: row;
+        margin: auto auto auto 12px;
+        height: 100%;
+        button{
+            position: relative;
+            cursor: pointer;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: none;
+            background-image: url('https://images.unsplash.com/photo-1549045337-967927d923c0?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-position: center;
+            background-size: cover;
+            overflow: visible;
+            margin: 10px 0 0 10px;
+
+            span{
+                display: flex;
+                position: absolute;
+                justify-content: center;
+                align-items: center;
+                top: 0;
+                right: 0;
+                width: 20px;
+                height: 20px;
+                padding: 10px;
+                background-color: #f00;
+                border-radius: 50%;
+                font-size: 10px;
+                z-index: 100;
+            }
+        }
+
+        .text{
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            h3{
+                margin: 0 0 4px 12px;
+            }
+            span{
+                margin-left: 10px;
+                font-size: 10px;
+            }
+        }
+    }
+    
+    .icons{
+        display: flex;
+        flex-direction: row;
+        margin: auto 12px auto auto;
+        button{
+            display: flex;
+            cursor: pointer;
+            margin: 12px;
+            border-radius: 25%;
+            padding: 8px;
+            background: #fff;
+            border: none;
+            border-radius: 50%;
+            img{
+                width: 24px;
+                height: 24px;
+                margin: auto;
+            }
+        }
+    }
 }
