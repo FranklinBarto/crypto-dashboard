@@ -1,6 +1,5 @@
 {
   "name": "crypto-dashboard",
-  "homepage": "https://frankothe196.github.io/crypto-dashboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
