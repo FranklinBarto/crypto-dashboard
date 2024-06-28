@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/topbar.scss';
-import Image from "next/image"
+
 import settingsIcon from '../assets/settings-outline.png';
 import chatIcon from '../assets/chat-outline.png';
 const Topbar = () => {
@@ -16,8 +16,8 @@ const Topbar = () => {
                 </div>
             </div>    
             <div className='icons'>
-                <button><Image src={chatIcon} alt='icon'/></button>
-                <button><Image src={settingsIcon} alt='icon'/></button>
+                <button><img src={chatIcon} alt='icon'/></button>
+                <button><img src={settingsIcon} alt='icon'/></button>
             </div>    
         </div>
     );

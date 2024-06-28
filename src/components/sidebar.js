@@ -1,6 +1,11 @@
-'use client';
 import React, { useState } from 'react';
+
 import '../styles/sidebar.scss';
+
+import walletIcon from '../assets/wallet.png';
+import transactionIcon from '../assets/transaction.png';
+import dashboardIcon from '../assets/dashboard.png';
+
 
 const Sidebar = ({isOpen,toggleSidebar}) => {
 
@@ -20,9 +25,9 @@ const Sidebar = ({isOpen,toggleSidebar}) => {
       </button>
       <section className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-content">
-          <button><img src="https://via.placeholder.com/150"/> {isOpen ? <span>Some Text...</span> : ''}</button>
-          <button><img src="https://via.placeholder.com/150"/> {isOpen ? <span>Some Text...</span> : ''}</button>
-          <button><img src="https://via.placeholder.com/150"/> {isOpen ? <span>Some Text...</span> : ''}</button>
+          <button><img src={dashboardIcon}/> {isOpen ? <span>Dashboard</span> : ''}</button>
+          <button><img src={walletIcon}/> {isOpen ? <span>My Wallet</span> : ''}</button>
+          <button><img src={transactionIcon}/> {isOpen ? <span>Transactions</span> : ''}</button>
         </div>
 
         {isOpen ? 

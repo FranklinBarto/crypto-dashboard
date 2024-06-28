@@ -1,0 +1,28 @@
+.btc-stats-chart-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: red;
+
+    .line-chart {
+        width: 100%;
+        height: 50%; // 80% of the container height
+        margin-bottom: 20px;
+        background-color: green;
+        canvas{
+            width: 100% !important;
+        }
+    }
+    
+    .bar-chart {
+        width: 100%;
+        height: 20%; // 20% of the container height
+        background-color: yellow;
+        canvas{
+            width: 100% !important;
+        }
+    }
+}

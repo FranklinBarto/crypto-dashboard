@@ -1,10 +1,12 @@
-"use client";
 import { useState } from "react";
-import "./page.scss";
+
+import './App.scss';
 import Sidebar from "./components/sidebar";
 import Topbar from "./components/topbar";
+import CoinChart from "./components/coinChart";
+import CoinStats from "./components/coinStats";
 
-export default function Home() {
+function App() {
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -18,10 +20,15 @@ export default function Home() {
       
       <div className="container">
         <section className="row h-25">
-          <div className="item w-100">2/3 Width</div>
+
+          <div className="item w-100">
+            <CoinStats/>
+          </div>
         </section>
         <section className="row h-75">
-          <div className="item w-100">1/3 Width</div>
+          <div className="item w-100">
+            <CoinChart/>
+          </div>
         </section>
         <section className="row h-25">
           <div className="item w-30">1/3 Width</div>
@@ -32,3 +39,6 @@ export default function Home() {
     </main>
   );
 }
+
+
+export default App;
