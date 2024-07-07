@@ -181,8 +181,8 @@ import {
   MouseCoordinateY,
   CrossHairCursor,
   ZoomButtons,
-  withDeviceRatio,
-  withSize,
+  // withDeviceRatio,
+  // withSize,
   discontinuousTimeScaleProviderBuilder,
 } from "react-financial-charts";
 import * as d3 from "d3";
