@@ -8,24 +8,25 @@
   z-index: 1001;
   justify-content: center;
   align-items: center;
-  background-color: #d6dde4;
+  background-color: #ffffff;
   color: #fff;
   border: none;
   border-radius: 100%;
   cursor: pointer;
   transition: transform 500ms ease, right 400ms ease; /* Ensure right is also included in the transition */
-
+  border: 1px solid rgb(208, 208, 208);
+  
   &.closed {
     transform: translateX(230px); /* Adjust transform to animate */
   }
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #eaeaea;
   }
 
   svg {
     cursor: pointer;
-    stroke: blue;
+    stroke: rgb(22, 22, 22);
     stroke-width: 2;
     stroke-linecap: round;
     transition: transform 0.5s ease-in-out;
@@ -63,7 +64,7 @@
   right: 0;
   height: 100%;
   width: 300px;
-  background-color: #333;
+  background-color: #08080E;
   color: #fff;
   // transform: translateX(100%);
   transition: 400ms ease;
@@ -86,17 +87,30 @@
       background: none;
       border: none;
       color: #fff;
-      padding: 4px;
+      padding: 2px 4px;
       cursor: pointer;
-      justify-content: center;
+      justify-content: start;
       align-items: center;
+      width: 80%;
+      margin-left: 6px;
+      border-radius: 18px;
+      
+      &.active{
+        background: #17191D;
+      }
+
       img {
         width: 42px;
         height: 42px;
         margin: 8px;
-        background: red;
+        background: white;
         padding: 8px;
         border-radius: 50%;
+        filter: brightness(0.8);
+        
+        &.active{
+          filter: brightness(1);
+        }
       }
     }
   }

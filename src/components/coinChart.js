@@ -155,116 +155,214 @@
 
 // export default withSize({ style: { minHeight: 600 } })(withDeviceRatio()(CoinChart));
 
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Bar } from "react-chartjs-2";
 
-// src/BtcStatsChart.js
+import "../styles/coinChart.scss";
 
-import React, { useEffect, useState } from 'react';
-
-import '../styles/coinChart.scss';
-
-import { Line, Bar } from 'react-chartjs-2';
-import axios from 'axios';
 import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-} from 'chart.js';
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+import {
+  Chart,
+  ChartCanvas,
+  XAxis,
+  YAxis,
+  CandlestickSeries,
+  MouseCoordinateX,
+  MouseCoordinateY,
+  CrossHairCursor,
+  ZoomButtons,
+  withDeviceRatio,
+  withSize,
+  discontinuousTimeScaleProviderBuilder,
+} from "react-financial-charts";
+import * as d3 from "d3";
 
 // Register the components with Chart.js
 ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
 );
 
 const CoinChart = () => {
-    const [priceChartData, setPriceChartData] = useState({});
-    const [volumeChartData, setVolumeChartData] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [candleData, setCandleData] = useState([]);
+  const [volumeChartData, setVolumeChartData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(
-                    'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30'
-                );
-                const prices = response.data.prices;
-                const volumes = response.data.total_volumes;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30"
+        );
+        const prices = response.data.prices;
+        const volumes = response.data.total_volumes;
 
-                if (prices && volumes) {
-                    const labels = prices.map(price => new Date(price[0]).toLocaleDateString());
+        if (prices && volumes) {
+          // Aggregate intraday prices to calculate OHLC values
+          const ohlcData = [];
+          let currentDay = null;
+          let open = 0,
+            high = 0,
+            low = Number.MAX_VALUE,
+            close = 0,
+            volume = 0;
 
-                    const priceData = {
-                        labels: labels,
-                        datasets: [
-                            {
-                                label: 'Bitcoin Price (USD)',
-                                data: prices.map(price => price[1]),
-                                borderColor: 'rgba(75,192,192,1)',
-                                backgroundColor: 'rgba(75,192,192,0.2)',
-                                fill: false,
-                            }
-                        ],
-                    };
+          prices.forEach((price, index) => {
+            const date = new Date(price[0]);
+            const day = date.toISOString().split("T")[0]; // Get date part
 
-                    const volumeData = {
-                        labels: labels,
-                        datasets: [
-                            {
-                                label: 'Volume (USD)',
-                                data: volumes.map(volume => volume[1]),
-                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
-                            }
-                        ],
-                    };
+            if (currentDay && currentDay !== day) {
+              // Push the aggregated data for the previous day
+              ohlcData.push({
+                date: new Date(currentDay),
+                open,
+                high,
+                low,
+                close,
+                volume,
+              });
 
-                    setPriceChartData(priceData);
-                    setVolumeChartData(volumeData);
-                }
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+              // Reset for the new day
+              open = price[1];
+              high = price[1];
+              low = price[1];
+              close = price[1];
+              volume = volumes[index][1];
+              currentDay = day;
+            } else {
+              // Update the values for the current day
+              high = Math.max(high, price[1]);
+              low = Math.min(low, price[1]);
+              close = price[1];
+              volume += volumes[index][1];
             }
-        };
 
-        fetchData();
-    }, []);
+            if (!currentDay) {
+              // Initialize for the first entry
+              currentDay = day;
+              open = price[1];
+              high = price[1];
+              low = price[1];
+              close = price[1];
+              volume = volumes[index][1];
+            }
+          });
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+          // Push the last aggregated day
+          if (currentDay) {
+            ohlcData.push({
+              date: new Date(currentDay),
+              open,
+              high,
+              low,
+              close,
+              volume,
+            });
+          }
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+          // Prepare data for volume chart
+          const labels = ohlcData.map((data) => data.date.toLocaleDateString());
+          const volumeData = {
+            labels: labels,
+            datasets: [
+              {
+                label: "Volume (USD)",
+                data: ohlcData.map((data) => data.volume),
+                backgroundColor: "rgba(54, 162, 235, 0.6)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 1,
+              },
+            ],
+          };
 
-    return (
-        <div className="btc-stats-chart-container">
-            <h2>Bitcoin Price (Last 30 Days)</h2>
-            <div className="line-chart">
-                <Line data={priceChartData} />
-            </div>
-            <h2>Bitcoin Volume (Last 30 Days)</h2>
-            <div className="bar-chart">
-                <Bar data={volumeChartData} />
-            </div>
-        </div>
-    )
+          setCandleData(ohlcData);
+          setVolumeChartData(volumeData);
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  const xScaleProvider =
+    discontinuousTimeScaleProviderBuilder().inputDateAccessor((d) => d.date);
+
+  const { data, xScale, xAccessor, displayXAccessor } =
+    xScaleProvider(candleData);
+
+  const start = xAccessor(data[data.length - 30]);
+  const end = xAccessor(data[data.length - 1]);
+  const xExtents = [start, end];
+
+  return (
+    <div className="btc-stats-chart-container">
+      <h2>Bitcoin Price (Last 30 Days)</h2>
+      <div className="line-chart">
+        <ChartCanvas
+          className="chart"
+          height={500}
+          ratio={1}
+          width={900}
+          margin={{ left: 50, right: 50, top: 10, bottom: 30 }}
+          data={data}
+          seriesName="BTC"
+          xScale={xScale}
+          xAccessor={xAccessor}
+          displayXAccessor={displayXAccessor}
+          xExtents={xExtents}
+        >
+          <Chart id={1} yExtents={(d) => [d.high, d.low]}>
+            <XAxis axisAt="bottom" orient="bottom" />
+            <YAxis axisAt="left" orient="left" ticks={5} />
+            <CandlestickSeries widthRatio={0.8} />
+            <MouseCoordinateX
+              at="bottom"
+              orient="bottom"
+              displayFormat={d3.timeFormat("%Y-%m-%d")}
+            />
+            <MouseCoordinateY
+              at="left"
+              orient="left"
+              displayFormat={d3.format(".2f")}
+            />
+          </Chart>
+          <CrossHairCursor />
+          <ZoomButtons />
+        </ChartCanvas>
+      </div>
+      <h2>Bitcoin Volume (Last 30 Days)</h2>
+      <div className="bar-chart">
+        <Bar data={volumeChartData} />
+      </div>
+    </div>
+  );
 };
 
 export default CoinChart;

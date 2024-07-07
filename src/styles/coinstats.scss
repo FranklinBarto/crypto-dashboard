@@ -2,33 +2,40 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    padding: 12px;
+    padding: 20px;
     height: 100%;
     width: 100%;
 
     div{
         display: flex;
         flex-direction: column;
-        margin-right: 24px;
+        margin-right: 18px;
         span{
             margin: 4px;
             font-size: 0.8rem;
         }
         p{
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
     }
+
     .timeFrames{
         position: absolute;
-        right: 0;
-        bottom: 0;
+        right: 8px;
+        bottom: 8px;
         display: flex;
         flex-direction: row;
+        border-radius: 4px;
+        background: rgb(126, 126, 126);
 
         button{
-            padding: 0;
-            margin: 4px;
-
+            border-radius: 4px;
+            padding: 4px 8px;
+            background: rgb(126, 126, 126);
+            border: none;
+            &.active{
+                background: rgb(54, 54, 54);
+            }
         }
     }
 }

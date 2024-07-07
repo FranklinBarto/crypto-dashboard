@@ -25,7 +25,7 @@ const Sidebar = ({isOpen,toggleSidebar}) => {
       </button>
       <section className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-content">
-          <button><img src={dashboardIcon} alt='icon'/> {isOpen ? <span>Dashboard</span> : ''}</button>
+          <button className={`${isOpen ? "active":""}`}><img className='active' src={dashboardIcon} alt='icon'/> {isOpen ? <span>Dashboard</span> : ''}</button>
           <button><img src={walletIcon} alt='icon'/> {isOpen ? <span>My Wallet</span> : ''}</button>
           <button><img src={transactionIcon} alt='icon'/> {isOpen ? <span>Transactions</span> : ''}</button>
         </div>

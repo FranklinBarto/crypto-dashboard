@@ -55,7 +55,7 @@ const CoinStats = () => {
                 <p>${market_data?.high_24h?.usd}</p>
             </div>
             <div>
-                <span>24h Low:</span>
+                <span>24h Low</span>
                 <p>${market_data?.low_24h?.usd}</p>
             </div>
             <div>
@@ -71,7 +71,7 @@ const CoinStats = () => {
                 <button>1 hour</button>
                 <button>1 day</button>
                 <button>1 week</button>
-                <button>1 month</button>
+                <button className='active'>1 month</button>
             </div>
         </div>
     );

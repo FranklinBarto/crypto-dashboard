@@ -7,6 +7,7 @@
   min-height: 100vh;
   transition: 300ms ease;
   margin-bottom: 60px;
+  background: #FAFAFA;
   &.closed{
     padding-right: 90px;
   }
@@ -37,19 +38,19 @@
       }
       .item{
         height: 100%;
+        border-radius: 12px;
+        background-color: #ffffff;
+        box-shadow: 1px 1px 4px #a9a9a9, -1px -1px 4px #ffffff;
         &.w-100 {
           width: 100%;
-          background-color: #f2f2f2; /* Light gray background for illustration */
         }
       
         &.w-60 {
           width: 66.66%;
-          background-color: #d9edf7; /* Light blue background for illustration */
         }
       
         &.w-30 {
           width: 33.33%;
-          background-color: #fcf8e3; /* Light yellow background for illustration */
 
       }
       }

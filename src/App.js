@@ -31,8 +31,7 @@ function App() {
           </div>
         </section>
         <section className="row h-25">
-          <div className="item w-30">1/3 Width</div>
-          <div className="item w-60">2/3 Width</div>
+          <div className="item w-100">1/3 Width</div>
         </section>
       </div>
 
